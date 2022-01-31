@@ -8,13 +8,15 @@ varying vec2 lmcoord;
 varying vec2 texcoord;
 varying vec4 glcolor;
 
+#define MX 1.1 // start smoothing wt.
+#define K -1.1 // wt. decrease factor
+#define MAX_W 0.75 // max filter weigth
+#define MIN_W 0.03 // min filter weigth
+#define LUM_ADD 0.33 // effects smoothing
+
+#define STAGES 2
+
 void main() {
-	#define MX 1.1 // start smoothing wt.
- 	#define K -1.1 // wt. decrease factor
- 	#define MAX_W 0.75 // max filter weigth
- 	#define MIN_W 0.03 // min filter weigth
- 	#define LUM_ADD 0.33 // effects smoothing
-	
 	vec4 color = texture2D(texture, texcoord);
 	vec3 c = color.xyz;
 	
@@ -22,8 +24,6 @@ void main() {
 	float y = 1.0 / textureSize(texture, 0).y;
 
 	const vec3 dt = 1.0 * vec3(1.0, 1.0, 1.0);
-	
-	#define STAGES 2
 
 	for(int i = 0; i <= STAGES; i++) {
 
